@@ -1,0 +1,87 @@
+{% extends 'login_page/base.html' %}
+{% block body %}
+<html>
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'login_page/style2.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+</head>
+{% if not user.is_authenticated %}
+<body>
+<div class="jumbotron">
+	<div class="container">
+		<h1>Welcome to Disquss</h1>
+		<p>A free to use website to answer all your questions from the inqusitive minds like you, without any barriers .</p>
+		<br>
+		<p><a class="btn btn-primary btn-lg" href="{% url 'login_page:register' %}" role="button">Create a new account »</a> <a class="btn btn-primary btn-lg" href="{% url 'login_page:login' %}" role="button">Login »</a></p>
+	</div>
+</div>
+<div class="container">
+	<div class="row">
+		<div class="col-md-4" style="color:#7014B6;">
+			<span class="fas fa-piggy-bank fa-3x" style="color:#7014B6;"></span>
+			<h3>Free To Use</h3>
+			<p>Disquss is a free to use website without any ads or any hidden costs.</p>
+		</div>
+		<div class="col-md-4" style="color:#7014B6;">
+			<span class="fas fa-user-secret fa-3x" style="color:#7014B6;"></span>
+			<h3>Safe and Secure</h3>
+			<p>We would never collect or share your personal information to anyone.</p>
+		</div>
+		<div class="col-md-4" style="color:#7014B6;">
+			<span class="fas fa-laugh fa-3x" style="color:#7014B6;"></span>
+			<h3>Versatile</h3>
+			<p>There Is no bound on number of questions per account, you can ask anything without any specific domain.</p>
+		</div>
+	</div>
+</div>
+</body>
+{% else %}
+    <body>
+    <div class="jumbotron">
+            <div class="row">
+                 <div class="col-md-2" style="padding: 90px 0px 0px 0px;">
+                     <h3>Sort By</h3>
+        <div class="card" style="border-color:#7014B6;">
+            <div class="card-body" >
+                <p><a class="btn btn-primary btn-md" href="{% url 'login_page:sbd' %}" role="button">Date »</a></p>
+                <hr style="border-color:#7014B6;">
+                <p><a class="btn btn-primary btn-md" href="{% url 'login_page:sbr' %}" role="button">Replies »</a></p>
+                <hr style="border-color:#7014B6;">
+                <p><a class="btn btn-primary btn-md" href="{% url 'login_page:sbu' %}" role="button">Unanswered »</a></p>
+                <hr style="border-color:#7014B6;">
+                <p><a class="btn btn-primary btn-md" href="{% url 'login_page:sbt' %}" role="button">Trending »</a></p>
+                <hr style="border-color:#7014B6;">
+                <p><a class="btn btn-primary btn-md" href="{% url 'login_page:sbc' %}" role="button">Categories »</a></p>
+            </div>
+        </div>
+                </div>
+                <div class="col-md-8">
+            <h1>Posts Sorted By Date ...</h1>
+	    {% for post in posts %}
+            <br>
+            <div class="card text-left" style="color:#8601AF; border-color:#7014B6;">
+                <div class="card-header">{{ post.post_title }}</div>
+                <div class="card-body">Posted by {{post.user}} on {{ post.date }}</div>
+                <div class="card-footer">
+                    <a class="btn btn-primary btn-lg" href="{% url 'thread:answer' pk=post.pk %}">Reply »</a>
+                    <a class="btn btn btn-danger btn-sm">{{ post.comments.count }} Replies</a>
+                </div>
+            </div>
+            {% endfor %}
+                </div>
+                <div class="col-md-2" style="padding: 90px 0px 0px 0px;">
+                    <h4>Not Finding your Question Post a New Question.</h4>
+        <div class="card"  style="border-color:#7014B6;" >
+            <div class="card-body" >
+                <p><a class="btn btn-primary btn-md" href="{% url 'thread:posting' %}" role="button">Post A New Thread »</a></p>
+    </div>
+            </div>
+                </div>
+        </div>
+    </div>
+
+</body>
+</html>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'login_page/base.html' %}
+{% block body %}
+{% load widget_tweaks %}
+<html>
+  <head>
+      {% load static %}
+      <link rel="stylesheet" href="{% static 'login_page/style3.css' %}" type="text/css"/>
+  </head>
+<body id="LoginForm">
+    <div class="container">
+        <div class='alert alert-danger alert-dismissible'>
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>{{ m1 }}</strong> {{ m2 }}
+        </div>
+    <div class="login-form">
+    <div class="main-div">
+    <div class="panel">
+        <h2>Welcome to Disquss</h2>
+        <p>Please login to continue.</p>
+   </div>
+    <form id="Login" method="post">
+        <div class="in_form_text">
+        <div class="form-group">
+           {% csrf_token %}
+            {{form.as_p}}
+        </div>
+        <div class="forgot">
+        <a href="reset.html">Forgot password ?</a>
+        </div>
+            <br>
+        <button type="submit" class="btn btn-primary">Login</button>
+              </div>
+    </form>
+    </div>
+</div>
+</div>
+</div>
+</body>
+</html>
+{% endblock %}

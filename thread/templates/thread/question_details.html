@@ -1,0 +1,72 @@
+{% extends 'login_page/base.html' %}
+{% block body %}
+<html>
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'thread\style.css' %}" type="text/css"/>
+</head>
+<body>
+{% if user.is_authenticated %}
+<div class="jumbotron">
+	<div class="container">
+		<h1>{{ post.post_title }}</h1>
+        <h5>posted by {{ post.user }} on {{ post.date }} &nbsp; {{ post.likes.count }} likes </h5>.
+        <form action="{% url 'thread:like_post'  %}" method="POST">
+            {% csrf_token %}
+            <button class="btn btn-primary" onClick="window.location.reload();" type="submit" name="post_id" value="{{post.id}}" >Like</button>
+        </form>
+        <br>
+        <h3>{{ post.post }}</h3>
+        <br>
+        <br>
+        <h3>Please, leave your reply here </h3>
+		<br>
+        <form method="post">
+        {% csrf_token %}
+        {{ form.errors }}
+        {{ form.post }}
+         <br>
+        <button class="btn btn-primary" href="{% url 'thread:answer' pk=post.pk %}" >Post »</button>
+        </form>
+
+            <h2>Some of the previous replies :</h2>
+        {% for post in posts %}
+            <div class="card bg-info">
+            <div class="card-body">{{ post.post }}</div>
+            <div class="card-footer">Posted by {{post.user}} on {{ post.date }}</div>
+            </div>
+        {% if post.Post_reply_reply %}
+        <h6>Top Comments :</h6>
+        {% for comment in post.Post_reply_reply %}
+            <div class="card bg-info">
+            <div class="card-body">{{ comment }}</div>
+            <div class="card-footer">Posted by {{comment.user}} on {{ comment.date }}</div>
+            </div>
+        {% endfor %}
+    <br>
+        {% else %}
+        <br>
+            <h6>No Comments Yet</h6>
+            <form action="{% url 'thread:comment'  %}" method="POST">
+            {% csrf_token %}
+            {{ form.errors }}
+            {{ form.comment }}
+            <button class="btn btn-primary" onClick="window.location.reload();" type="submit" name="comment_id" value="{{post.pk}}">Comment »</button>
+        </form>
+        <br>
+        {% endif %}
+        {% endfor %}
+	</div>
+</div>
+{% else %}
+    <div class="jumbotron">
+        <div class="container">
+        <h1>You Need To Login First, In Order To Continue.</h1>
+            <p>you can login by clicking on the button below.</p>
+            <p><a class="btn btn-primary btn-lg" href="{% url 'login_page:login' %}" role="button">Login »</a></p>
+        </div>
+    </div>
+</body>
+</html>
+{% endif %}
+{% endblock %}

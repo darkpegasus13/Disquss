@@ -1,0 +1,48 @@
+{% extends 'login_page/base.html' %}
+{% block body %}
+<html>
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'thread\style.css' %}" type="text/css"/>
+</head>
+<body>
+{% if user.is_authenticated %}
+<div class="jumbotron">
+	<div class="container">
+		<h1>Welcome to Disquss forum, Now You Can Start Posting .</h1>
+		<p>Please post your question below.</p>
+		<br>
+        <form method="post">
+        {% csrf_token %}
+        {{ form.errors }}
+            <h5>Please Enter A Title For Your Post.</h5>
+            {{ form.post_title }}
+            <h5>Describe Details Of Your Post. </h5>
+        {{ form.post }}
+            <h5>Please Enter The Category Your Post Belongs To.</h5>
+            {{ form.category }}
+         <br>
+        <button class="btn btn-primary btn-lg" type="submit">Post</button>
+        </form>
+        <h1>{{ text }}</h1>
+	</div>
+</div>
+{% else %}
+    <div class="jumbotron">
+        <div class="container">
+        <h2>You Need To Login First, In Order To Continue.</h2>
+            <br>
+            <p>You Can Login By Clicking On The Button Below.</p>
+            <p><a class="btn btn-primary btn-lg" href="{% url 'login_page:login' %}" role="button">Login »</a></p>
+            <br>
+            <h2>Don't Have A Account No Need To Worry, Create A New Account Here, </h2>
+            <br>
+            <p>It's Free And Always Will Be.</p>
+            <p><a class="btn btn-primary btn-lg" href="{% url 'login_page:register' %}" role="button">Create A New Account »</a></p>
+            <br>
+        </div>
+    </div>
+</body>
+</html>
+{% endif %}
+{% endblock %}

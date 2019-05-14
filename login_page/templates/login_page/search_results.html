@@ -1,0 +1,35 @@
+{% extends 'login_page/base.html' %}
+{% block body %}
+<html>
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'thread\style.css' %}" type="text/css"/>
+</head>
+<body>
+{% if menu_item %}
+<div class="jumbotron">
+	<br class="container">
+		<h1>Following Post Are Found : </h1>
+		<br>
+        {% for post in menu_item %}
+            <div class="card bg-info">
+                <div class="card-header">{{ post.post }}</div>
+                <div class="card-body">Posted by {{post.user.get_full_name}} on {{ post.date }}</div>
+                <div class="card-footer">
+                    <a class="btn btn-primary btn-lg" href="{% url 'thread:answer' pk=post.pk %}">Reply »</a>
+                    <a class="btn btn btn-danger btn-sm">{{ post.comments.count }} Replies</a>
+                </div>
+            </div>
+    <br>
+        {% endfor %}
+	</div>
+{% else %}
+    <div class="jumbotron">
+        <div class="container">
+        <h1>Sorry, But The Post You Are Searching For Is Not Found.</h1>
+        </div>
+    </div>
+</body>
+</html>
+{% endif %}
+{% endblock %}

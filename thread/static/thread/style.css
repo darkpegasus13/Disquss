@@ -1,0 +1,20 @@
+.jumbotron {
+	background: #F7F3D0;
+	color: #6E0CB9;
+	padding: 30px 120px 30px 30px
+ }
+
+
+.btn.btn-primary.btn-lg {
+  background: #6E0CB9;
+  color: #FEFDF6;
+}
+
+.list-group.list-group-flush{
+color: #6E0CB9;
+font-size: 20px;
+}
+.card-body{
+font-size: 20px;
+color: #6E0CB9;
+}

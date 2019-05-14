@@ -1,0 +1,11 @@
+.jumbotron {
+	background: #F7F3D0;
+	color: #6E0CB9;
+	text-align: center;
+}
+
+.btn.btn-primary.btn-lg {
+  background: #6E0CB9;
+  color: #FEFDF6;
+}
+

@@ -1,0 +1,99 @@
+{% extends 'login_page/base.html' %}
+{% block body %}
+<html>
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'thread/style.css' %}" type="text/css"/>
+</head>
+<body>
+{% if user.is_authenticated %}
+    <div class="container">
+        <br>
+        <div class="alert alert-success alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Success!</strong> You Have Been Logged In Successfully.
+        </div>
+     <div class="row">
+    <div class="col-sm-4">
+    <div class="card" style='width:300px; border-color:#7014B6;'>
+  <div class="card-body">
+    <p class="card-text">Welcome, {{user.username}} </p>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">First Name : {{user.first_name}}</li>
+    <li class="list-group-item">Last Name : {{user.last_name}}</li>
+    <li class="list-group-item">Email : {{user.email}}</li>
+    <li class="list-group-item">Total No. of Replies : {{user_posts.count}}</li>
+    <li class="list-group-item">Total No. Of Posts : {{user_answers.count}}</li>
+  </ul>
+        </div>
+</div>
+   <div class="col-sm-6">
+       <h2 style="color:#7014B6;">Recent Posts ,</h2>
+       {% for i in recent_posts %}
+            <br>
+            <h4 style="color:#7014B6;">» {{ i.post }} on {{ i.date }}</h4>
+            <br>
+       {% endfor %}
+       <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#all_posts">View All Posts</button>
+       <br>
+       <div id="all_posts" class="collapse">
+        {% for i in user_posts %}
+                <hr style="border-color:#7014B6;">
+                <h4 style="color:#7014B6;">» {{ i.post }} on {{ i.date }}</h4>
+                <a class="btn btn-primary btn-md" href="{% url 'thread:answer' pk=i.pk %}">Go to Post »</a>
+                <hr style="border-color:#7014B6;">
+                {% endfor %}
+                <br>
+        </div>
+        <br>
+       <h2 style="color:#7014B6;">Recent Replies ,</h2>
+       {% for j in recent_answers %}
+            <br>
+            <h4 style="color:#7014B6;">» {{ j.post }} on {{ j.date }}</h4>
+            <br>
+       {% endfor %}
+       <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#all_replies">View All Replies</button>
+       <br>
+       <div id="all_replies" class="collapse">
+       {% for j in user_answers %}
+                <hr style="border-color:#7014B6;">
+                <h4 style="color:#7014B6;">» {{ j.post }} on {{ j.date }}</h4>
+                <a class="btn btn-primary btn-md" href="{% url 'thread:answer' pk=j.question.pk %}">Go to Post »</a>
+                <hr style="border-color:#7014B6;">
+                {% endfor %}
+       </div>
+   </div>
+    <div class="col-sm-2">
+        <div class="card" style='width:150px; border-color:#7014B6;'>
+            <div class="card-body" >
+                <p><a class="btn btn-primary btn-lg" href="{% url 'thread:posting' %}" role="button">Post »</a></p>
+                <hr style="border-color:#7014B6;">
+                <p><a class="btn btn-primary btn-lg" href="{% url 'login_page:register' %}" role="button">Search »</a></p>
+                <hr style="border-color:#7014B6;">
+            <p><a class="btn btn-primary btn-lg" href="{% url 'login_page:index' %}" role="button">Answer »</a></p>
+    </div>
+    </div>
+    </div>
+     </div>
+    </div>
+{% else %}
+    <div class="jumbotron">
+        <div class="container">
+        <h2>You Need To Login First, In Order To Continue.</h2>
+            <br>
+            <p>you can login by clicking on the button below.</p>
+            <br>
+            <p><a class="btn btn-primary btn-lg" href="{% url 'login_page:login' %}" role="button">Login »</a></p>
+            <br>
+            <h2>Don't Have A Account No Need To Worry, Create A New Account Here, </h2>
+            <br>
+            <p><a class="btn btn-primary btn-lg" href="{% url 'login_page:register' %}" role="button">Create A New Account »</a></p>
+            <br>
+        </div>
+    </div>
+</body>
+</html>
+{% endif %}
+{% endblock %}
